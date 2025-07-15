@@ -45,6 +45,7 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Estate Management")),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -73,11 +74,17 @@ class SplashPageState extends State<SplashPage> {
             ),
             Spacer(),
             TextButton(
-              onPressed: () => context.go("/contact_list"),
+              onPressed: () => context.push("/contact_list"),
               child: Text("Contact List12345r"),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.call), label: "Calls"),
+          BottomNavigationBarItem(icon: Icon(Icons.camera), label: "Camera"),
+        ],
       ),
     );
   }

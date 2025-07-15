@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:water_utility_mobile/gen/assets.gen.dart';
@@ -15,8 +14,6 @@ class ContactListPage extends StatefulWidget {
 class ContactListState extends State<ContactListPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController myController = TextEditingController();
-  TextEditingController myPhoneController = TextEditingController();
-  TextEditingController myNameController = TextEditingController();
 
   void _printLatestValue() {
     final text = myController.text;
@@ -68,7 +65,6 @@ class ContactListState extends State<ContactListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Estate Management")),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -121,16 +117,14 @@ class ContactListState extends State<ContactListPage> {
                     controller: myController,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: "phone"),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(labelText: "here"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'add a contact - form - phone';
                       }
                       return null;
                     },
-                    controller: myPhoneController,
+                    controller: myController,
                   ),
                   TextFormField(
                     decoration: InputDecoration(labelText: "here"),
