@@ -45,23 +45,25 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Estate Management")),
+      appBar: AppBar(title: Text("Estate Management1")),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          //mainAxisAlignment: MainAxisAlignment.start,
+          //mainAxisSize: MainAxisSize.min,
           children: [
-            Spacer(),
+            //Spacer(),
 
             /// App Icon
-            Row(
-              children: [
-                Spacer(),
-                //Expanded(child: Assets.icons.appIcon.image(fit: BoxFit.fill)),
-                Spacer(),
-              ],
-            ),
-            SizedBox(height: 20),
+            //Row(
+            //  children: [
+            //    Spacer(),
+            //Expanded(child: Assets.icons.appIcon.image(fit: BoxFit.fill)),
+            //    Spacer(),
+            //  ],
+            //),
+            //SizedBox(height: 10),
 
             /// App Title
             Text(
@@ -72,7 +74,7 @@ class SplashPageState extends State<SplashPage> {
                 color: Colors.black87,
               ),
             ),
-            Spacer(),
+            //Spacer(),
             TextButton(
               onPressed: () => context.push("/contact_list"),
               child: Text("Contact List12345r"),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'presentation/screens/splash_page.dart';
 import 'presentation/screens/contact_list.dart';
+import 'presentation/screens/contact_list_add_contact.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +15,7 @@ final GoRouter _router = GoRouter(
   debugLogDiagnostics: true,
 
   // Log all route changes for debugging
-  observers: [
-    NavigatorObserver(),
-  ],
+  observers: [NavigatorObserver()],
 
   // Handle route errors
   errorBuilder: (context, state) {
@@ -62,10 +61,16 @@ final GoRouter _router = GoRouter(
       },
       routes: <RouteBase>[
         GoRoute(
-            path: 'contact_list',
-            builder: (BuildContext context, GoRouterState state) {
-              return const ContactListPage();
-            },
+          path: 'contact_list',
+          builder: (BuildContext context, GoRouterState state) {
+            return const ContactListPage();
+          },
+        ),
+        GoRoute(
+          path: 'contact_list_add_contact',
+          builder: (BuildContext context, GoRouterState state) {
+            return const ContactListAddContactPage();
+          },
         ),
       ],
     ),
@@ -79,10 +84,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-        routerConfig: _router,
-        title: 'Water Utility App',
-        debugShowCheckedModeBanner: false,
-        //theme: AppTheme.lightTheme,
+      routerConfig: _router,
+      title: 'Water Utility App',
+      debugShowCheckedModeBanner: false,
+      //theme: AppTheme.lightTheme,
     );
   }
 }

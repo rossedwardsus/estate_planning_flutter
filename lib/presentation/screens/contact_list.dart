@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -69,6 +70,12 @@ class ContactListState extends State<ContactListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Estate Management")),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push("/contact_list_add_contact");
+        },
+        child: const Icon(Icons.add, color: Colors.white, size: 28),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -105,51 +112,69 @@ class ContactListState extends State<ContactListPage> {
               ),
             ),
             Spacer(),
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(labelText: "here"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'add a contact - form - name';
-                      }
-                      return null;
-                    },
-                    controller: myController,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: "phone"),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'add a contact - form - phone';
-                      }
-                      return null;
-                    },
-                    controller: myPhoneController,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: "here"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'add a contact - form - relation';
-                      }
-                      return null;
-                    },
-                    controller: myController,
-                  ),
-                  //Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
-                    },
-                    child: const Text("Submit"),
-                  ),
-                ],
+            FractionallySizedBox(
+              widthFactor: 0.7,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "here"),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'add a contact - form - name';
+                        }
+                        return null;
+                      },
+                      controller: myController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "phone"),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'add a contact - form - phone';
+                        }
+                        return null;
+                      },
+                      controller: myPhoneController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "email"),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'add a contact - form - email - empty';
+                        } else if (EmailValidator.validate(value)) {
+                          return 'add a contact - form - not a valid email';
+                        }
+
+                        return null;
+                      },
+                      controller: myPhoneController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "relation"),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'add a contact - form - relation';
+                        }
+                        return null;
+                      },
+                      controller: myController,
+                    ),
+                    //Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {}
+                      },
+                      child: const Text("Submit"),
+                    ),
+                  ],
+                ),
               ),
             ),
             Spacer(),
