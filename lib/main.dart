@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'presentation/screens/splash_page.dart';
 import 'presentation/screens/contact_list.dart';
 import 'presentation/screens/contact_list_add_contact.dart';
+import 'presentation/screens/assets_bank_accounts.dart';
+import 'presentation/screens/assets_bank_accounts_add_account.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,6 +72,18 @@ final GoRouter _router = GoRouter(
           path: 'contact_list_add_contact',
           builder: (BuildContext context, GoRouterState state) {
             return const ContactListAddContactPage();
+          },
+        ),
+        GoRoute(
+          path: 'assets_bank_accounts_add_account',
+          builder: (BuildContext context, GoRouterState state) {
+            return const AssetsBankAccountsAddAccountPage();
+          },
+        ),
+        GoRoute(
+          path: 'assets_bank_accounts',
+          builder: (BuildContext context, GoRouterState state) {
+            return const AssetsBankAccountsPage();
           },
         ),
       ],
