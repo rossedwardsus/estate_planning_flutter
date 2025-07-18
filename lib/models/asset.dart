@@ -4,19 +4,20 @@ import "package:freezed_annotation/freezed_annotation.dart";
 
 //part "main.g.dart";
 
-part "asset.freezed.dart";
+part "asset_bank_account.freezed.dart";
 
-part "asset.g.dart";
+part "asset_bank_account.g.dart";
 
 @freezed
-abstract class Asset with _$Asset {
-  const factory Asset({
-    required String assetName,
-    required String assetType, //house, ira, checking, stock
-    String? bankingInstitution,
-    String? phone,
-    String? contactType,
-  }) = _Asset;
+abstract class AssetBankAccount with _$AssetBankAccount {
+  const factory AssetBankAccount({
+    required String name,
+    required String bankName, //house, ira, checking, stock
+    //String? bankingInstitution,
+    //String? phone,
+    //String? contactType,
+  }) = _AssetBankAccount;
 
-  factory Asset.fromJson(Map<String, dynamic> json) => _$AssetFromJson(json);
+  factory AssetBankAccount.fromJson(Map<String, dynamic> json) =>
+      _$AssetBankAccountFromJson(json);
 }
