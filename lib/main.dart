@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import 'presentation/screens/splash_page.dart';
 import 'presentation/screens/contact_list.dart';
 import 'presentation/screens/contact_list_add_contact.dart';
 import 'presentation/screens/assets_bank_accounts.dart';
 import 'presentation/screens/assets_bank_accounts_add_account.dart';
+import 'presentation/screens/assets_physical.dart';
+import 'presentation/screens/funeral.dart';
+import '/bloc/assets_bank_account_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -86,6 +90,18 @@ final GoRouter _router = GoRouter(
             return const AssetsBankAccountsPage();
           },
         ),
+        GoRoute(
+          path: 'assets_physical',
+          builder: (BuildContext context, GoRouterState state) {
+            return const AssetsPhysicalPage();
+          },
+        ),
+        GoRoute(
+          path: 'funeral',
+          builder: (BuildContext context, GoRouterState state) {
+            return const FuneralPage();
+          },
+        ),
       ],
     ),
   ],
@@ -97,11 +113,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-      title: 'Water Utility App',
-      debugShowCheckedModeBanner: false,
-      //theme: AppTheme.lightTheme,
+    return BlocProvider<AssetsBankAccountBloc>(
+      create: (context) => AssetsBankAccountBloc(),
+      child: MaterialApp.router(
+        routerConfig: _router,
+        title: 'Water Utility App',
+        debugShowCheckedModeBanner: false,
+        //theme: AppTheme.lightTheme,
+      ),
     );
   }
 }

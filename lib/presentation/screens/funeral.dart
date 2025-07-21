@@ -4,16 +4,17 @@ import 'package:go_router/go_router.dart';
 //import 'package:water_utility_mobile/gen/assets.gen.dart';
 import "dart:developer";
 
-class ContactListPage extends StatefulWidget {
-  const ContactListPage({super.key});
+class FuneralPage extends StatefulWidget {
+  const FuneralPage({super.key});
 
   @override
-  State<ContactListPage> createState() => ContactListState();
+  State<FuneralPage> createState() => FuneralState();
 }
 
-class ContactListState extends State<ContactListPage> {
+class FuneralState extends State<FuneralPage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   TextEditingController myController = TextEditingController();
+  late TabController tabController;
 
   void _printLatestValue() {
     final text = myController.text;
@@ -23,7 +24,6 @@ class ContactListState extends State<ContactListPage> {
 
   @override
   void initState() {
-    super.initState();
     //WidgetsBinding.instance.addPostFrameCallback((_) async {
     //await Future.delayed(Duration(seconds: 1));
 
@@ -51,6 +51,14 @@ class ContactListState extends State<ContactListPage> {
     //}
     //});
 
+    tabController = TabController(length: 4, vsync: this);
+
+    tabController.addListener(() {
+      setState(() {});
+    });
+
+    super.initState();
+
     myController.addListener(_printLatestValue);
   }
 
@@ -65,6 +73,7 @@ class ContactListState extends State<ContactListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Estate Management - Funeral")),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -84,7 +93,7 @@ class ContactListState extends State<ContactListPage> {
 
             /// App Title
             Text(
-              "Estate Planning - Contact List-add a contact",
+              "Estate Planning - Funeral",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -107,30 +116,50 @@ class ContactListState extends State<ContactListPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextFormField(
-                    decoration: InputDecoration(labelText: "here"),
+                    decoration: InputDecoration(labelText: "Funeral Home Name"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'add a contact - form - name';
+                        return 'Funeral Home Name';
                       }
                       return null;
                     },
                     controller: myController,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: "here"),
+                    decoration: InputDecoration(labelText: "Date Of Viewing"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'add a contact - form - phone';
+                        return 'Date of Viewing';
                       }
                       return null;
                     },
                     controller: myController,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: "here"),
+                    decoration: InputDecoration(labelText: "Manage Guest List"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'add a contact - form - relation';
+                        return 'Date of Viewing';
+                      }
+                      return null;
+                    },
+                    controller: myController,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Cemetary"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Date of Burial';
+                      }
+                      return null;
+                    },
+                    controller: myController,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Date of Burial"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Date of Burial';
                       }
                       return null;
                     },

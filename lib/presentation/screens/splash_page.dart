@@ -83,6 +83,14 @@ class SplashPageState extends State<SplashPage> {
               onPressed: () => context.push("/assets_bank_accounts"),
               child: Text("Bank Accounts"),
             ),
+            TextButton(
+              onPressed: () => context.push("/assets_physical"),
+              child: Text("Physixal Assets"),
+            ),
+            TextButton(
+              onPressed: () => context.push("/funeral"),
+              child: Text("Funeral"),
+            ),
           ],
         ),
       ),

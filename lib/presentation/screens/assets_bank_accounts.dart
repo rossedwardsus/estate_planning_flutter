@@ -35,6 +35,16 @@ class AssetsBankAccountsState extends State<AssetsBankAccountsPage> {
   TextEditingController myAssetNameController = TextEditingController();
   TextEditingController myBankNameController = TextEditingController();
 
+  String? _chosenModel;
+
+  List<AssetBankAccount> bankAccountList = [
+    AssetBankAccount(
+      name: "freezedaccountone1",
+      bankName: "freezedbank1",
+      accountType: "freezedcd",
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -68,224 +78,237 @@ class AssetsBankAccountsState extends State<AssetsBankAccountsPage> {
 
   @override
   Widget build(BuildContext context) {
-    String? _chosenModel;
-
-    List<AssetBankAccount> bankAccountList = [
-      AssetBankAccount(
-        name: "freezedaccountone1",
-        bankName: "freezedbank1",
-        accountType: "freezedcd",
-      ),
-    ];
-
     var bankAccountList1 = [
       {"name": "accountone1", "bankName": "bank1"},
     ];
 
-    return BlocProvider(
-      create: (context) => AssetsBankAccountBloc(),
-      child: BlocConsumer<AssetsBankAccountBloc, AssetsBankAccountState>(
-        buildWhen: (previous, current) {
-          /*if (previous is OnboardingPageState &&
-                    current is OnboardingPageState) {
-                  if (previous.pageIndex == 0 && current.pageIndex > 0) {
-                    return true;
-                  } else if (previous.pageIndex > 0 && current.pageIndex == 0) {
-                    return true;
-                  } else if (previous.pageIndex != 2 && current.pageIndex == 2) {
-                    return true;
-                  } else if (previous.pageIndex == 2 && current.pageIndex != 2) {
-                    return true;
-                  }
-                  return false;
-                }*/
-          return false;
-        },
-        listener: (context, state) async {
-          /*if (state is OnboardingPageState) {
-                    /// Back button on Appbar
-                    if (state.pageIndex > 0) {
-                      showBackButtion = true;
-                    } else if (state.pageIndex == 0) {
-                      showBackButtion = false;
-                    }
-
-                    /// Create Account Button in the bottom
-                    if (state.pageIndex == 2) {
-                      showCreateAndLoginButton = true;
-                    } else {
-                      showCreateAndLoginButton = false;
-                    }
-
-                    /// Notification request
-                    if (state.pageIndex >= 0) {
-                      if (state.pageIndex == 1) {
-                        FlutterLocalNotificationsPlugin
-                            flutterLocalNotificationsPlugin =
-                            FlutterLocalNotificationsPlugin();
-                        if (Platform.isAndroid) {
-                          final AndroidFlutterLocalNotificationsPlugin?
-                              androidImplementation = flutterLocalNotificationsPlugin
-                                  .resolvePlatformSpecificImplementation<
-                                      AndroidFlutterLocalNotificationsPlugin>();
-                          final bool? grantedNotificationPermission =
-                              await androidImplementation
-                                  ?.requestNotificationsPermission();
-                          debugPrint(
-                              "grantedNotificationPermission : $grantedNotificationPermission");
-                        } else if (Platform.isIOS) {
-                          await flutterLocalNotificationsPlugin
-                              .resolvePlatformSpecificImplementation<
-                                  IOSFlutterLocalNotificationsPlugin>()
-                              ?.requestPermissions(
-                                alert: true,
-                                badge: true,
-                                sound: true,
-                              );
-                        }
-                      }
-
-                      /// Move PageView by Index
-                      _pageViewMockController.animateToPage(
-                        state.pageIndex,
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                      _pageViewTextController.animateToPage(
-                        state.pageIndex,
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    } else {
-                      /// Should not happened
-                      /// Back Button show disable
-                      throw ("${state.runtimeType} error, index: ${state.pageIndex}");
-                    }
-                  } else if (state is RegisterNavigation) {
-                    context.push("/onboarding/account_role_select");
-                  } else if (state is LoginNavigation) {
-                    context.go("/login");
-                  }*/
-        },
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(title: Text("Estate Management - Bank Accounts")),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                context.push("/assets_bank_accounts_add_account");
-              },
-              child: const Icon(Icons.add, color: Colors.white, size: 28),
-            ),
-            backgroundColor: Colors.white,
-            body: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  //Spacer(),
-
-                  /// App Icon
-                  //Row(
-                  //  children: [
-                  //    Spacer(),
-                  //Expanded(child: Assets.icons.appIcon.image(fit: BoxFit.fill)),
-                  //    Spacer(),
-                  //  ],
-                  //),
-                  //SizedBox(height: 20),
-
-                  /// App Title
-                  Text(
-                    "Estate Planning - Accounts",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  Flexible(
-                    child: FractionallySizedBox(
-                      heightFactor: 0.5,
-                      widthFactor: 0.5,
-                      child: ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(
-                              'list ${bankAccountList[index].name} ${bankAccountList[index].bankName} ${bankAccountList[index].accountType}',
-                              //'111bankAccountList1 $index ${bankAccountList1[index]["name"]}${bankAccountList1[index]["bankName"]}',
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  //Spacer(),
-                  FractionallySizedBox(
-                    widthFactor: 0.7,
-                    //heightFactor: 0.5,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: "Asset Name",
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'add a contact - form - name';
+    return BlocBuilder<AssetsBankAccountBloc, AssetsBankAccountState1>(
+      /*buildWhen: (previous, current) {
+        print("previous $previous");
+        print("current $current");
+        /*if (previous is OnboardingPageState &&
+                              current is OnboardingPageState) {
+                            if (previous.pageIndex == 0 && current.pageIndex > 0) {
+                              return true;
+                            } else if (previous.pageIndex > 0 && current.pageIndex == 0) {
+                              return true;
+                            } else if (previous.pageIndex != 2 && current.pageIndex == 2) {
+                              return true;
+                            } else if (previous.pageIndex == 2 && current.pageIndex != 2) {
+                              return true;
+                            }
+                            return false;
+                          }*/
+        return false;
+      },
+      listener: (context, state) async {
+        print("state $state");
+        /*if (state is OnboardingPageState) {
+                              /// Back button on Appbar
+                              if (state.pageIndex > 0) {
+                                showBackButtion = true;
+                              } else if (state.pageIndex == 0) {
+                                showBackButtion = false;
                               }
-                              return null;
-                            },
-                            controller: myController,
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(labelText: "Bank Name"),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'add a contact - form - phone';
+
+                              /// Create Account Button in the bottom
+                              if (state.pageIndex == 2) {
+                                showCreateAndLoginButton = true;
+                              } else {
+                                showCreateAndLoginButton = false;
                               }
-                              return null;
-                            },
-                            controller: myBankNameController,
+
+                              /// Notification request
+                              if (state.pageIndex >= 0) {
+                                if (state.pageIndex == 1) {
+                                  FlutterLocalNotificationsPlugin
+                                      flutterLocalNotificationsPlugin =
+                                      FlutterLocalNotificationsPlugin();
+                                  if (Platform.isAndroid) {
+                                    final AndroidFlutterLocalNotificationsPlugin?
+                                        androidImplementation = flutterLocalNotificationsPlugin
+                                            .resolvePlatformSpecificImplementation<
+                                                AndroidFlutterLocalNotificationsPlugin>();
+                                    final bool? grantedNotificationPermission =
+                                        await androidImplementation
+                                            ?.requestNotificationsPermission();
+                                    debugPrint(
+                                        "grantedNotificationPermission : $grantedNotificationPermission");
+                                  } else if (Platform.isIOS) {
+                                    await flutterLocalNotificationsPlugin
+                                        .resolvePlatformSpecificImplementation<
+                                            IOSFlutterLocalNotificationsPlugin>()
+                                        ?.requestPermissions(
+                                          alert: true,
+                                          badge: true,
+                                          sound: true,
+                                        );
+                                  }
+                                }
+
+                                /// Move PageView by Index
+                                _pageViewMockController.animateToPage(
+                                  state.pageIndex,
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                                _pageViewTextController.animateToPage(
+                                  state.pageIndex,
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              } else {
+                                /// Should not happened
+                                /// Back Button show disable
+                                throw ("${state.runtimeType} error, index: ${state.pageIndex}");
+                              }
+                            } else if (state is RegisterNavigation) {
+                              context.push("/onboarding/account_role_select");
+                            } else if (state is LoginNavigation) {
+                              context.go("/login");
+                            }*/
+      },*/
+      builder: (context, state) {
+        print("state $state");
+        return Scaffold(
+          appBar: AppBar(title: Text("Estate Management - Bank Accounts")),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              //context.push("/assets_bank_accounts_add_account");
+              //context.read<AssetsBankAccountBloc>().add(
+              //  AssetsBankAccountAddAccount(
+              //AssetBankAccount(
+              //  name: "another bloc account123",
+              //  bankName: "another bloc bank123",
+              //  accountType: "at",
+              //),
+              //  ),
+              //);
+            },
+            child: const Icon(Icons.add, color: Colors.white, size: 28),
+          ),
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                //Spacer(),
+
+                /// App Icon
+                //Row(
+                //  children: [
+                //    Spacer(),
+                //Expanded(child: Assets.icons.appIcon.image(fit: BoxFit.fill)),
+                //    Spacer(),
+                //  ],
+                //),
+                //SizedBox(height: 20),
+
+                /// App Title
+                Text(
+                  "Estate Planning - Accounts",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                Flexible(
+                  child: FractionallySizedBox(
+                    heightFactor: 0.5,
+                    widthFactor: 0.5,
+                    child: ListView.builder(
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(
+                            'hello ${state.bankAccountList1}',
+                            //'${state.bankAccountList1[0]["name"]} list ${bankAccountList[index].name} ${bankAccountList[index].bankName} ${bankAccountList[index].accountType}',
+                            //'111bankAccountList1 $index ${bankAccountList1[index]["name"]}${bankAccountList1[index]["bankName"]}',
                           ),
-                          DropdownButton(
-                            items:
-                                <String>[
-                                  "Checking Account",
-                                  "Ira",
-                                  "CD",
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                _chosenModel = newValue;
-                              });
-                            },
-                          ),
-                          //Spacer(),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {}
-                            },
-                            child: const Text("Submit"),
-                          ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   ),
-                  Spacer(),
-                ],
-              ),
+                ),
+                //Spacer(),
+                FractionallySizedBox(
+                  widthFactor: 0.7,
+                  //heightFactor: 0.5,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        TextFormField(
+                          decoration: InputDecoration(labelText: "Asset Name"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'add a contact - form - name';
+                            }
+                            return null;
+                          },
+                          controller: myController,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(labelText: "Bank Name"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'add a contact - form - phone';
+                            }
+                            return null;
+                          },
+                          controller: myBankNameController,
+                        ),
+                        DropdownButton(
+                          items:
+                              <String>[
+                                "Checking Account",
+                                "Ira",
+                                "CD",
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _chosenModel = newValue;
+                            });
+                          },
+                        ),
+                        //Spacer(),
+                        ElevatedButton(
+                          onPressed: () {
+                            print("hello");
+                            //if (_formKey.currentState!.validate()) {}
+                            //Future() async {
+                            context.read<AssetsBankAccountBloc>().add(
+                              AssetsBankAccountAddAccount(
+                                {"onpress": "onpress"},
+                                //AssetBankAccount(
+                                //  name: "another bloc account123",
+                                //  bankName: "another bloc bank123",
+                                //  accountType: "at",
+                                //),
+                              ),
+                            );
+                            //};
+                            print("hello again");
+                          },
+                          child: const Text("Submit1"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Spacer(),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
