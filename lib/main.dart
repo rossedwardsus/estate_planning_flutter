@@ -1,7 +1,9 @@
+import 'package:estate_planning_flutter/models/asset_physical.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import 'presentation/screens/estate_plan.dart';
 import 'presentation/screens/splash_page.dart';
 import 'presentation/screens/contact_list.dart';
 import 'presentation/screens/contact_list_add_contact.dart';
@@ -9,10 +11,33 @@ import 'presentation/screens/assets_bank_accounts.dart';
 import 'presentation/screens/assets_bank_accounts_add_account.dart';
 import 'presentation/screens/assets_physical.dart';
 import 'presentation/screens/funeral.dart';
+import 'presentation/screens/todos.dart';
+import 'presentation/screens/documents.dart';
 import '/bloc/assets_bank_account_bloc.dart';
+import '/bloc/assets_physical_bloc.dart';
+import '/bloc/document_bloc.dart';
+import '/bloc/funeral_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<AssetsBankAccountBloc>(
+          create: (BuildContext context) => AssetsBankAccountBloc(),
+        ),
+        BlocProvider<AssetsPhysicalBloc>(
+          create: (BuildContext context) => AssetsPhysicalBloc(),
+        ),
+        BlocProvider<DocumentBloc>(
+          create: (BuildContext context) => DocumentBloc(),
+        ),
+        BlocProvider<FuneralBloc>(
+          create: (BuildContext context) => FuneralBloc(),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 /// The route configuration.
@@ -73,6 +98,12 @@ final GoRouter _router = GoRouter(
           },
         ),
         GoRoute(
+          path: 'estate_plan',
+          builder: (BuildContext context, GoRouterState state) {
+            return const EstatePlanPage();
+          },
+        ),
+        GoRoute(
           path: 'contact_list_add_contact',
           builder: (BuildContext context, GoRouterState state) {
             return const ContactListAddContactPage();
@@ -102,6 +133,18 @@ final GoRouter _router = GoRouter(
             return const FuneralPage();
           },
         ),
+        GoRoute(
+          path: 'todos',
+          builder: (BuildContext context, GoRouterState state) {
+            return const TodosPage();
+          },
+        ),
+        GoRoute(
+          path: 'documents',
+          builder: (BuildContext context, GoRouterState state) {
+            return const DocumentsPage();
+          },
+        ),
       ],
     ),
   ],
@@ -113,14 +156,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AssetsBankAccountBloc>(
-      create: (context) => AssetsBankAccountBloc(),
-      child: MaterialApp.router(
-        routerConfig: _router,
-        title: 'Water Utility App',
-        debugShowCheckedModeBanner: false,
-        //theme: AppTheme.lightTheme,
-      ),
+    return MaterialApp.router(
+      routerConfig: _router,
+      title: 'Water Utility App',
+      debugShowCheckedModeBanner: false,
+      //theme: AppTheme.lightTheme,
     );
   }
 }

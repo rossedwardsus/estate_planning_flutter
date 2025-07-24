@@ -95,7 +95,7 @@ class ContactListState extends State<ContactListPage> {
 
             /// App Title
             Text(
-              "Estate Planning - Contact List-add a contact",
+              "Estate Planning - Contact List-add a contact-add a contact group",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -158,6 +158,28 @@ class ContactListState extends State<ContactListPage> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(labelText: "relation"),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'add a contact - form - relation';
+                        }
+                        return null;
+                      },
+                      controller: myController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "location"),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'add a contact - form - relation';
+                        }
+                        return null;
+                      },
+                      controller: myController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "invite_to_funeraln",
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'add a contact - form - relation';

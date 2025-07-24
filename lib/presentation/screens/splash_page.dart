@@ -76,6 +76,10 @@ class SplashPageState extends State<SplashPage> {
             ),
             //Spacer(),
             TextButton(
+              onPressed: () => context.push("/estate_plan"),
+              child: Text("Estate Plan Who For"),
+            ),
+            TextButton(
               onPressed: () => context.push("/contact_list"),
               child: Text("Contact List12345r"),
             ),
@@ -90,6 +94,14 @@ class SplashPageState extends State<SplashPage> {
             TextButton(
               onPressed: () => context.push("/funeral"),
               child: Text("Funeral"),
+            ),
+            TextButton(
+              onPressed: () => context.push("/todos"),
+              child: Text("Todos"),
+            ),
+            TextButton(
+              onPressed: () => context.push("/documents"),
+              child: Text("Documents"),
             ),
           ],
         ),
