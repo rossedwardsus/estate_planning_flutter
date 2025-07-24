@@ -1,7 +1,9 @@
 import 'package:estate_planning_flutter/models/asset_physical.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'presentation/screens/estate_plan.dart';
 import 'presentation/screens/splash_page.dart';
@@ -19,6 +21,10 @@ import '/bloc/document_bloc.dart';
 import '/bloc/funeral_bloc.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    usePathUrlStrategy();
+  }
   runApp(
     MultiBlocProvider(
       providers: [

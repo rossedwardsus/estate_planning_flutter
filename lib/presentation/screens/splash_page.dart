@@ -1,7 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:water_utility_mobile/gen/assets.gen.dart';
+import '/presentation/screens/components/main_menu_component_mobile.dart';
+import '/presentation/screens/components/main_menu_component_web_desktop.dart';
+import 'dart:io';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -47,65 +51,74 @@ class SplashPageState extends State<SplashPage> {
     return Scaffold(
       appBar: AppBar(title: Text("Estate Management1")),
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.start,
-          //mainAxisAlignment: MainAxisAlignment.start,
-          //mainAxisSize: MainAxisSize.min,
-          children: [
-            //Spacer(),
+      body: kIsWeb ? MainMenuWebDesktopComponent() : MainMenuMobilePage(),
+      /*
+              *? Text("web")
+              : SafeArea(
+                child: Row(
+                  //crossAxisAlignment: CrossAxisAlignment.start,
+                  //mainAxisAlignment: MainAxisAlignment.start,
+                  //mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //Spacer(),
 
-            /// App Icon
-            //Row(
-            //  children: [
-            //    Spacer(),
-            //Expanded(child: Assets.icons.appIcon.image(fit: BoxFit.fill)),
-            //    Spacer(),
-            //  ],
-            //),
-            //SizedBox(height: 10),
+                    /// App Icon
+                    //Row(
+                    //  children: [
+                    //    Spacer(),
+                    //Expanded(child: Assets.icons.appIcon.image(fit: BoxFit.fill)),
+                    //    Spacer(),
+                    //  ],
+                    //),
+                    //SizedBox(height: 10),
 
-            /// App Title
-            Text(
-              "Estate Planning",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            //Spacer(),
-            TextButton(
-              onPressed: () => context.push("/estate_plan"),
-              child: Text("Estate Plan Who For"),
-            ),
-            TextButton(
-              onPressed: () => context.push("/contact_list"),
-              child: Text("Contact List12345r"),
-            ),
-            TextButton(
-              onPressed: () => context.push("/assets_bank_accounts"),
-              child: Text("Bank Accounts"),
-            ),
-            TextButton(
-              onPressed: () => context.push("/assets_physical"),
-              child: Text("Physixal Assets"),
-            ),
-            TextButton(
-              onPressed: () => context.push("/funeral"),
-              child: Text("Funeral"),
-            ),
-            TextButton(
-              onPressed: () => context.push("/todos"),
-              child: Text("Todos"),
-            ),
-            TextButton(
-              onPressed: () => context.push("/documents"),
-              child: Text("Documents"),
-            ),
-          ],
-        ),
-      ),
+                    /// App Title
+                    Column(children: [Expanded(child: Text("hello"))]),
+                    Column(
+                      children: [
+                        Text(
+                          "Estate Planning",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        //Spacer(),
+                        TextButton(
+                          onPressed: () => context.push("/estate_plan"),
+                          child: Text("Estate Plan Who For"),
+                        ),
+                        TextButton(
+                          onPressed: () => context.push("/contact_list"),
+                          child: Text("Contact List12345r"),
+                        ),
+                        TextButton(
+                          onPressed:
+                              () => context.push("/assets_bank_accounts"),
+                          child: Text("Bank Accounts"),
+                        ),
+                        TextButton(
+                          onPressed: () => context.push("/assets_physical"),
+                          child: Text("Physixal Assets"),
+                        ),
+                        TextButton(
+                          onPressed: () => context.push("/funeral"),
+                          child: Text("Funeral"),
+                        ),
+                        TextButton(
+                          onPressed: () => context.push("/todos"),
+                          child: Text("Todos"),
+                        ),
+                        TextButton(
+                          onPressed: () => context.push("/documents"),
+                          child: Text("Documents"),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),*/
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.call), label: "Calls"),
